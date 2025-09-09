@@ -1,0 +1,23 @@
+{
+  "name": "panniz/pannizbulkproductcategory",
+  "description": "Aggiunge un'azione di gruppo per assegnare più prodotti a nuove categorie.",
+  "type": "prestashop-module",
+  "license": "AFL-3.0",
+  "authors": [
+    {
+      "name": "Panniz",
+      "email": "contact@example.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Panniz\\BulkProductCategory\\": "src/"
+    }
+  },
+  "config": {
+    "prepend-autoloader": false
+  }
+}

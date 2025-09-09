@@ -1,0 +1,7 @@
+panniz_bulk_assign_category_form:
+  path: /panniz/products/bulk-assign-category
+  methods: [GET, POST]
+  defaults:
+    _controller: Panniz\BulkProductCategory\Controller\Admin\BulkAssignCategoryController::index
+    _legacy_controller: 'BulkAssignCategoryController'
+    _legacy_link: 'BulkAssignCategoryController'

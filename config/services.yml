@@ -1,0 +1,15 @@
+services:
+    Panniz\BulkProductCategory\Controller\Admin\BulkAssignCategoryController:
+        public: true
+        autowire: false
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '@translator'
+            - '@prestashop.adapter.legacy.context'
+        tags:
+            - 'controller.service_arguments'
+
+    Panniz\BulkProductCategory\Form\Type\BulkCategoryAssignType:
+        public: true
+        tags:
+            - 'form.type'
