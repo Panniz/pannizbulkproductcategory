@@ -7,22 +7,24 @@
             {{ form_start(form) }}
             <div class="card">
                 <h3 class="card-header">
-                    <i class="material-icons">add_circle_outline</i> {{ layoutTitle }}
+                    <i class="material-icons">edit</i> {{ layoutTitle }}
                 </h3>
                 <div class="card-body">
                     <div class="alert alert-info" role="alert">
                         <p class="alert-text">
-                            {{ 'You are about to modify %count% products. Select the categories you want to add them to.'|trans({'%count%': productCount}, 'Modules.Pannizbulkproductcategory.Admin') }}
+                            {{ 'You are about to edit %count% products. Choose an action and select the categories.'|trans({'%count%': productCount}, 'Modules.Pannizbulkproductcategory.Admin') }}
                         </p>
                     </div>
 
-                    {# Render the categories field and the hidden one with the IDs #}
+                    {# Render the new 'action' field #}
+                    {{ form_row(form.action) }}
+
+                    {# The rest of the form #}
                     {{ form_row(form.categories) }}
                     {{ form_widget(form.product_ids) }}
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-end">
-                        {# FIX: Use the variable passed from the controller #}
                         <a href="{{ cancel_url }}" class="btn btn-outline-secondary mr-2">
                             {{ 'Cancel'|trans({}, 'Admin.Actions') }}
                         </a>
@@ -33,7 +35,7 @@
             {{ form_end(form) }}
         </div>
     </div>
-        <script>
+    <script>
         $(document).ready(function() {
             const ChoiceTree = new window.prestashop.component.ChoiceTree('#bulk_category_assign_categories');
             ChoiceTree.enableAutoCheckChildren();
