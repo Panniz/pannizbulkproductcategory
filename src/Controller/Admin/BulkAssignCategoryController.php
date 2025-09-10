@@ -29,7 +29,7 @@ class BulkAssignCategoryController extends FrameworkBundleAdminController
 
     public function index(Request $request): Response
     {
-        $productIds = $request->get('product_ids', []);
+        $productIds = $request->get('product_bulk', []);
         $productIdsAsString = implode(',', $productIds);
 
         $form = $this->createForm(BulkCategoryAssignType::class, ['product_ids' => $productIdsAsString]);
