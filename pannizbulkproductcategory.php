@@ -28,7 +28,10 @@ class PannizBulkProductCategory extends Module
 
     public function install(): bool
     {
-        return parent::install() && $this->installTab() && $this->registerHook('actionProductGridDefinitionModifier');
+        return parent::install()
+            && $this->installTab()
+            && $this->registerHook('actionProductGridDefinitionModifier')
+            && $this->registerHook('actionCategoryGridDefinitionModifier');
     }
 
     public function uninstall(): bool
@@ -50,6 +53,20 @@ class PannizBulkProductCategory extends Module
                 // We set the options, the most important is the route of our controller
                 ->setOptions([
                     'submit_route' => 'panniz_bulk_assign_category_form',
+                ])
+        );
+    }
+
+    public function hookActionCategoryGridDefinitionModifier(array $params): void
+    {
+        /** @var GridDefinitionInterface $definition */
+        $definition = $params['definition'];
+
+        $definition->getBulkActions()->add(
+            (new SubmitBulkAction('bulk_clone_categories'))
+                ->setName($this->trans('Clone to category', [], 'Modules.Pannizbulkproductcategory.Admin'))
+                ->setOptions([
+                    'submit_route' => 'panniz_category_clone_form',
                 ])
         );
     }

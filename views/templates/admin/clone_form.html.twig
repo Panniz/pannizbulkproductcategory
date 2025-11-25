@@ -1,0 +1,63 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card">
+                <h3 class="card-header">
+                    <i class="material-icons">content_copy</i>
+                    {{ layoutTitle }}
+                </h3>
+                <div class="card-body">
+                    <div class="alert alert-info" role="alert">
+                        <p class="alert-text">
+                            {{ 'Stai per clonare %count% categorie (e le loro sottocategorie) in una nuova posizione.'|trans({'%count%': categoryCount}, 'Modules.Pannizbulkproductcategory.Admin') }}
+                        </p>
+                    </div>
+
+                    {{ form_start(form) }}
+                    
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3 required">
+                            {{ form.destination_category.vars.label }}
+                        </label>
+                        <div class="col-md-9">
+                            {{ form_widget(form.destination_category) }}
+                            {{ form_errors(form.destination_category) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3 required">
+                            {{ form.recursive.vars.label }}
+                        </label>
+                        <div class="col-md-9">
+                            {{ form_widget(form.recursive) }}
+                            {{ form_errors(form.recursive) }}
+                        </div>
+                    </div>
+
+                    {{ form_widget(form.selected_categories) }}
+
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ cancel_url }}" class="btn btn-secondary">{{ 'Annulla'|trans({}, 'Admin.Actions') }}</a>
+                            {{ form_widget(form.save) }}
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            const ChoiceTree = new window.prestashop.component.ChoiceTree('#category_clone_destination_category');
+        });
+    </script>
+{% endblock %}

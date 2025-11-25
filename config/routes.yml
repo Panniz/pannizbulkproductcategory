@@ -5,3 +5,11 @@ panniz_bulk_assign_category_form:
     _controller: Panniz\BulkProductCategory\Controller\Admin\BulkAssignCategoryController::index
     _legacy_controller: 'BulkAssignCategoryController'
     _legacy_link: 'BulkAssignCategoryController'
+
+panniz_category_clone_form:
+  path: /panniz/categories/clone
+  methods: [GET, POST]
+  defaults:
+    _controller: Panniz\BulkProductCategory\Controller\Admin\CategoryCloneController::index
+    _legacy_controller: 'CategoryCloneController'
+    _legacy_link: 'CategoryCloneController'

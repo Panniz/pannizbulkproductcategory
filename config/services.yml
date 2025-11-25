@@ -13,3 +13,18 @@ services:
         public: true
         tags:
             - 'form.type'
+
+    Panniz\BulkProductCategory\Controller\Admin\CategoryCloneController:
+        public: true
+        autowire: false
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '@translator'
+            - '@prestashop.adapter.legacy.context'
+        tags:
+            - 'controller.service_arguments'
+
+    Panniz\BulkProductCategory\Form\Type\CategoryCloneType:
+        public: true
+        tags:
+            - 'form.type'
