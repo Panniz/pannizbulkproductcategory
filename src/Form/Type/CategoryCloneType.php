@@ -30,6 +30,17 @@ class CategoryCloneType extends AbstractType
                 'required' => true,
                 'data' => false,
             ])
+            ->add('clone_products', ChoiceType::class, [
+                'label' => 'Associare i prodotti alle nuove categorie?',
+                'choices' => [
+                    'No' => false,
+                    'Si' => true,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'required' => true,
+                'data' => false,
+            ])
             ->add('selected_categories', HiddenType::class, [
                 'required' => true,
             ])

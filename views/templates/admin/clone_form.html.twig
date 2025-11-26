@@ -16,7 +16,7 @@
                     </div>
 
                     {{ form_start(form) }}
-                    
+
                     <div class="form-group row">
                         <label class="form-control-label col-md-3 required">
                             {{ form.destination_category.vars.label }}
@@ -37,6 +37,16 @@
                         </div>
                     </div>
 
+                    <div class="form-group row">
+                        <label class="form-control-label col-md-3 required">
+                            {{ form.clone_products.vars.label }}
+                        </label>
+                        <div class="col-md-9">
+                            {{ form_widget(form.clone_products) }}
+                            {{ form_errors(form.clone_products) }}
+                        </div>
+                    </div>
+
                     {{ form_widget(form.selected_categories) }}
 
                     <div class="card-footer">
@@ -51,7 +61,7 @@
             </div>
         </div>
     </div>
-    
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

@@ -48,11 +48,12 @@ class CategoryCloneController extends FrameworkBundleAdminController
             $selectedCategoryIds = array_filter(explode(',', $data['selected_categories']));
             $destinationCategoryId = $data['destination_category'];
             $recursive = $data['recursive'] ?? false;
+            $cloneProducts = $data['clone_products'] ?? false;
 
             if (!empty($selectedCategoryIds) && $destinationCategoryId) {
                 $count = 0;
                 foreach ($selectedCategoryIds as $sourceId) {
-                    $this->cloneCategory((int)$sourceId, (int)$destinationCategoryId, (bool)$recursive);
+                    $this->cloneCategory((int)$sourceId, (int)$destinationCategoryId, (bool)$recursive, (bool)$cloneProducts);
                     $count++;
                 }
 
@@ -76,7 +77,7 @@ class CategoryCloneController extends FrameworkBundleAdminController
         ]);
     }
 
-    private function cloneCategory(int $sourceId, int $destinationParentId, bool $recursive = false): void
+    private function cloneCategory(int $sourceId, int $destinationParentId, bool $recursive = false, bool $cloneProducts = false): void
     {
         $sourceCategory = new Category($sourceId);
         if (!Validate::isLoadedObject($sourceCategory)) {
@@ -95,11 +96,35 @@ class CategoryCloneController extends FrameworkBundleAdminController
         // Copy other properties as needed
 
         if ($newCategory->add()) {
+            if ($cloneProducts) {
+                // getProducts($idLang, $p, $n, $orderBy, $orderWay, $getTotal, $active, $random, $randomNumberProducts, $checkAccess)
+                // We set $active to false to get ALL products (active and inactive)
+                // We set $checkAccess to false to avoid checking customer context in Admin
+                $products = $sourceCategory->getProducts(
+                    $this->legacyContext->getContext()->language->id,
+                    1,
+                    100000,
+                    'id_product',
+                    'ASC',
+                    false,
+                    false,
+                    false,
+                    1,
+                    false
+                );
+                if (!empty($products)) {
+                    foreach ($products as $productData) {
+                        $product = new \Product((int)$productData['id_product']);
+                        $product->addToCategories([$newCategory->id]);
+                    }
+                }
+            }
+
             if ($recursive) {
                 // Clone children
                 $children = Category::getChildren($sourceId, $this->legacyContext->getContext()->language->id);
                 foreach ($children as $child) {
-                    $this->cloneCategory((int)$child['id_category'], (int)$newCategory->id, true);
+                    $this->cloneCategory((int)$child['id_category'], (int)$newCategory->id, true, true);
                 }
             }
         }
