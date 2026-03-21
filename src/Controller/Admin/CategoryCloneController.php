@@ -30,13 +30,7 @@ class CategoryCloneController extends FrameworkBundleAdminController
 
     public function index(Request $request): Response
     {
-        // Bulk actions usually send data via POST in 'category_category_bulk' or similar, 
-        // but user confirmed 'category_id_category'.
-        // We check both query (GET) and request (POST) bags.
-        $categoryIds = $request->request->get('category_id_category', []);
-        if (empty($categoryIds)) {
-            $categoryIds = $request->query->get('category_id_category', []);
-        }
+        $categoryIds = $request->request->all('category_id_category') ?? [];
 
         $categoryIdsAsString = is_array($categoryIds) ? implode(',', $categoryIds) : $categoryIds;
 
