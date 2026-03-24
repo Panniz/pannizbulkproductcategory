@@ -118,7 +118,7 @@ class CategoryCloneController extends FrameworkBundleAdminController
                 // Clone children
                 $children = Category::getChildren($sourceId, $this->legacyContext->getContext()->language->id);
                 foreach ($children as $child) {
-                    $this->cloneCategory((int)$child['id_category'], (int)$newCategory->id, true, true);
+                    $this->cloneCategory((int)$child['id_category'], (int)$newCategory->id, $recursive, $cloneProducts);
                 }
             }
         }
